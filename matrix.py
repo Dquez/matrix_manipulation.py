@@ -67,42 +67,26 @@ class Matrix(object):
                 raise(ValueError, "Non-square Matrix does not have an inverse.")
             if self.h > 2:
                 raise(NotImplementedError, "inversion not implemented for matrices larger than 2x2.")
-            elif len(self.g) == 1:
-                inverse.append([1/self.g[0][0]])
-            else:
-                ad = self.g[0][0] *  self.g[1][1]
-                bc = self.g[0][1] *  self.g[1][0]
-                if ad == bc:
-                    raise ValueError('The denominator of a fraction cannot be zero')
-                        trace =  self.trace()
-                        inverse_after_trace = [[1 * trace, 0 * trace],
-                                               [0 * trace, 1 * trace]]
-                        right_matrix_constant = []
-                for i in range(len(self.g)):
-                    row = []
-                    for j in range(len(self.g[0])):
-                        row.append(inverse_after_trace[i][j] - self.g[i][j])
-                        right_matrix_constant.append(row)
-                for i in range(len(right_matrix_constant)):
-                    row = []
-                    for j in range(len(right_matrix_constant[0])):
-                        val = right_matrix_constant[i][j]  * (1/(ad-bc))
-                            row.append(val)
-                            inverse.append(row)
-                return Matrix(inverse)
-                 
+            if self.w == 1:
+                return self.g[0][0] * (1/self.determinant())
+            else if self.w == 2:        
+                invMat = zeroes(self.w, self.h)
+                invMat[0][0] = self.g[1][1] * (1/self.determinant())
+                invMat[0][1] = -self.g[0][1] * (1/self.determinant())
+                invMat[1][0] = -self.g[1][0] * (1/self.determinant())
+                invMat[1][1] = self.g[0][0] * (1/self.determinant())
+                return invMat                 
 
     def T(self):
         """
         Returns a transposed copy of this Matrix.
         """
-            matrix_transpose = []
-            for i in range(len(self.g[0])):
-                row = []
-                for j in range(len(self.g)):
-                    row.append(self.g[j][i])
-            matrix_transpose.append(row)
-                return Matrix(matrix_transpose)
+        grid = zeroes(self.w, self.h)
+        # transponsing elements      
+        for row in range(self.h):
+            for column in range(self.w):
+                grid[column][row] = self.g[row][column]
+        return grid
 
     def is_square(self):
         return self.h == self.w
