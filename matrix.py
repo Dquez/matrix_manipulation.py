@@ -4,19 +4,19 @@ import numbers
 
 def zeroes(height, width):
     """
-        Creates a matrix of zeroes.
-        """
-            g = [[0.0 for _ in range(width)] for __ in range(height)]
-            return Matrix(g)
+    Creates a matrix of zeroes.
+    """
+    g = [[0.0 for _ in range(width)] for __ in range(height)]
+    return Matrix(g)
 
 def identity(n):
     """
-        Creates a n x n identity matrix.
-        """
-            I = zeroes(n, n)
-            for i in range(n):
-                I.g[i][i] = 1.0
-                    return I
+    Creates a n x n identity matrix.
+    """
+    I = zeroes(n, n)
+    for i in range(n):
+        I.g[i][i] = 1.0
+    return I
 
 class Matrix(object):
     
@@ -45,8 +45,8 @@ class Matrix(object):
             bc = self.g[0][1] *  self.g[1][0]
             return ad - bc
 
-def trace(self):
-    """
+    def trace(self):
+        """
         Calculates the trace of a matrix (sum of diagonal entries).
         """
             if not self.is_square():
@@ -57,44 +57,43 @@ def trace(self):
                                 if i == j:
                                     trace += self.g[i][j]
                                         return trace
-                                    # TODO - your code here
 
-def inverse(self):
-    """
+    def inverse(self):
+        """
         Calculates the inverse of a 1x1 or 2x2 Matrix.
         """
             inverse = []
             if not self.is_square():
                 raise(ValueError, "Non-square Matrix does not have an inverse.")
-                    if self.h > 2:
-                        raise(NotImplementedError, "inversion not implemented for matrices larger than 2x2.")
-                            elif len(self.g) == 1:
-                                inverse.append([1/self.g[0][0]])
-                                    else:
-                                        ad = self.g[0][0] *  self.g[1][1]
-                                        bc = self.g[0][1] *  self.g[1][0]
-                                        if ad == bc:
-                                            raise ValueError('The denominator of a fraction cannot be zero')
-                                                trace =  self.trace()
-                                                inverse_after_trace = [[1 * trace, 0 * trace],
-                                                                       [0 * trace, 1 * trace]]
-                                                                       right_matrix_constant = []
-                                                                           for i in range(len(self.g)):
-                                                                               row = []
-                                                                               for j in range(len(self.g[0])):
-                                                                                   row.append(inverse_after_trace[i][j] - self.g[i][j])
-                                                                                       right_matrix_constant.append(row)
-                                                                                           for i in range(len(right_matrix_constant)):
-                                                                                               row = []
-                                                                                               for j in range(len(right_matrix_constant[0])):
-                                                                                                   val = right_matrix_constant[i][j]  * (1/(ad-bc))
-                                                                                                   row.append(val)
-                                                                                                       inverse.append(row)
-                                                                                                           return Matrix(inverse)
-                                                                                                       # TODO - your code here
+            if self.h > 2:
+                raise(NotImplementedError, "inversion not implemented for matrices larger than 2x2.")
+            elif len(self.g) == 1:
+                inverse.append([1/self.g[0][0]])
+            else:
+                ad = self.g[0][0] *  self.g[1][1]
+                bc = self.g[0][1] *  self.g[1][0]
+                if ad == bc:
+                    raise ValueError('The denominator of a fraction cannot be zero')
+                        trace =  self.trace()
+                        inverse_after_trace = [[1 * trace, 0 * trace],
+                                               [0 * trace, 1 * trace]]
+                        right_matrix_constant = []
+                for i in range(len(self.g)):
+                    row = []
+                    for j in range(len(self.g[0])):
+                        row.append(inverse_after_trace[i][j] - self.g[i][j])
+                        right_matrix_constant.append(row)
+                for i in range(len(right_matrix_constant)):
+                    row = []
+                    for j in range(len(right_matrix_constant[0])):
+                        val = right_matrix_constant[i][j]  * (1/(ad-bc))
+                            row.append(val)
+                            inverse.append(row)
+                return Matrix(inverse)
+                 
 
-def T(self):
-    """
+    def T(self):
+        """
         Returns a transposed copy of this Matrix.
         """
             matrix_transpose = []
@@ -105,12 +104,12 @@ def T(self):
             matrix_transpose.append(row)
                 return Matrix(matrix_transpose)
 
-def is_square(self):
-    return self.h == self.w
+    def is_square(self):
+        return self.h == self.w
     
-    #
-    # Begin Operator Overloading
-    ############################
+        #
+        # Begin Operator Overloading
+        ############################
     def __getitem__(self,idx):
         """
             Defines the behavior of using square brackets [] on instances
@@ -230,9 +229,6 @@ def is_square(self):
             """
         if isinstance(other, numbers.Number):
             pass
-            #
-            # TODO - your code here
-            #
             for i in range(len(self.g)):
                 for j in range(len(self.g[0])):
                     self.g[i][j] *= other
